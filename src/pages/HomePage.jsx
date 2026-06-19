@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSearch } from '../context/SearchContext';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function HomePage() {
   // Коробка для всех товаров
   const [allProducts, setAllProducts] = useState([]);
@@ -31,7 +34,8 @@ function HomePage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/products');
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/products`);
       setAllProducts(response.data.products);
       setLoading(false);
     } catch (error) {
@@ -42,7 +46,8 @@ function HomePage() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/categories');
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data.categories);
     } catch (error) {
       console.error('Ошибка загрузки категорий:', error);
