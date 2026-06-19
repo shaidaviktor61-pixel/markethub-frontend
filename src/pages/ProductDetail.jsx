@@ -4,6 +4,9 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import ReviewsSection from '../components/ReviewsSection';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function ProductDetail() {
   const { id } = useParams(); // Получаем ID из URL
   const [product, setProduct] = useState(null);
@@ -16,7 +19,8 @@ function ProductDetail() {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/products/${id}`);
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/products/${id}`);
       setProduct(response.data.product);
       setLoading(false);
     } catch (error) {
@@ -72,27 +76,27 @@ function ProductDetail() {
               : 'Нет в наличии'}
           </p>
           
-<button 
-  disabled={product.stock_quantity === 0}
-  onClick={() => addToCart(product)}
-  style={{
-    width: '100%',
-    padding: '15px',
-    backgroundColor: product.stock_quantity > 0 ? '#27ae60' : '#bdc3c7',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: product.stock_quantity > 0 ? 'pointer' : 'not-allowed',
-    fontSize: '16px',
-    fontWeight: 'bold'
-  }}
->
-  {product.stock_quantity > 0 ? '🛒 Добавить в корзину' : 'Нет в наличии'}
-</button>
+          <button 
+            disabled={product.stock_quantity === 0}
+            onClick={() => addToCart(product)}
+            style={{
+              width: '100%',
+              padding: '15px',
+              backgroundColor: product.stock_quantity > 0 ? '#27ae60' : '#bdc3c7',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: product.stock_quantity > 0 ? 'pointer' : 'not-allowed',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}
+          >
+            {product.stock_quantity > 0 ? '🛒 Добавить в корзину' : 'Нет в наличии'}
+          </button>
         </div>
       </div>
       {/* Секция отзывов */}
-<ReviewsSection productId={parseInt(id)} />
+      <ReviewsSection productId={parseInt(id)} />
     </div>
   );
 }
