@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function AddProductPage() {
   const { token, user } = useAuth();
   const navigate = useNavigate();
@@ -21,13 +24,14 @@ function AddProductPage() {
   const [categories, setCategories] = useState([]);
 
   // Загружаем категории при монтировании
-useEffect(() => {
-  fetchCategories();
-}, []);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/categories');
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data.categories);
     } catch (error) {
       console.error('Ошибка загрузки категорий:', error);
@@ -47,8 +51,9 @@ useEffect(() => {
     setLoading(true);
 
     try {
+      // ✅ Исправлено: используем API_URL
       await axios.post(
-        'http://localhost:3000/api/products',
+        `${API_URL}/api/products`,
         {
           ...formData,
           price: parseFloat(formData.price),
