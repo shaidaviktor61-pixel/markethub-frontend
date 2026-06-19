@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Вход
+  // ✅ Вход (исправлен - возвращает роль)
   const login = async (email, password) => {
     try {
       const response = await axios.post(`${API_URL}/api/auth/login`, {
@@ -72,7 +72,9 @@ export const AuthProvider = ({ children }) => {
       setToken(token);
       setUser(user);
       
-      return { success: true };
+      // ✅ ВОЗВРАЩАЕМ РОЛЬ ДЛЯ РЕДИРЕКТА
+      return { success: true, role: user.role };
+      
     } catch (error) {
       return { 
         success: false, 

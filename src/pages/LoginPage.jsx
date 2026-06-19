@@ -19,7 +19,12 @@ function LoginPage() {
     const result = await login(email, password);
     
     if (result.success) {
-      navigate('/'); // Перенаправляем на главную
+      // ✅ АВТОМАТИЧЕСКИЙ РЕДИРЕКТ ПО РОЛИ
+      if (result.role === 'ADMIN') {
+        navigate('/admin'); // Админ → в админ-панель
+      } else {
+        navigate('/'); // Обычный пользователь → на главную
+      }
     } else {
       setError(result.error);
     }

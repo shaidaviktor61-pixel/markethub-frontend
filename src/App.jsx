@@ -14,6 +14,7 @@ import AddProductPage from './pages/AddProductPage';
 import SellerDashboard from './pages/SellerDashboard';
 import OrdersPage from './pages/OrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/seller/products/add" element={<AddProductPage />} />
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/orders/:orderId" element={<OrderDetailPage />} />
+              <Route path="/admin" element={<AdminPanel />} />
             </Routes>
           </BrowserRouter>
         </SearchProvider>  {/* ← ДОБАВЬ */}
