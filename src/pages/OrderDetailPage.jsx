@@ -3,6 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function OrderDetailPage() {
   const { orderId } = useParams();
   const { token, isAuthenticated } = useAuth();
@@ -19,7 +22,8 @@ function OrderDetailPage() {
 
   const fetchOrder = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/orders/${orderId}`, {
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/orders/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
