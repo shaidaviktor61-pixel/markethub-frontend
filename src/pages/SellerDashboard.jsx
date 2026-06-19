@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function SellerDashboard() {
   const { user, token, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -27,7 +30,8 @@ function SellerDashboard() {
 
   const fetchSellerProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/products/seller', {
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/products/seller`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -46,7 +50,8 @@ function SellerDashboard() {
     }
 
     try {
-      await axios.delete(`http://localhost:3000/api/products/${productId}`, {
+      // ✅ Исправлено: используем API_URL
+      await axios.delete(`${API_URL}/api/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
