@@ -1,0 +1,121 @@
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+  /* Header */
+  header > div {
+    flex-wrap: wrap;
+    gap: 10px !important;
+  }
+
+  header input[type="text"] {
+    max-width: 100% !important;
+    order: 3;
+    width: 100% !important;
+  }
+
+  header a[style*="font-size: 24px"] {
+    font-size: 20px !important;
+  }
+
+  /* Скрываем текст в кнопках Header на мобильных */
+  header button {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+
+  header span[style*="font-size: 14px"] {
+    display: none !important;
+  }
+
+  /* HomePage - карточки в один столбец */
+  div[style*="grid-template-columns: repeat(auto-fill"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ProductDetail - одна колонка */
+  div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* CartPage - упрощаем layout */
+  div[style*="grid-template-columns: 2fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* CheckoutPage - одна колонка */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 30px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* SellerDashboard - скрываем таблицу, показываем карточки */
+  table {
+    display: none !important;
+  }
+
+  /* SellerDashboard - статистика в один столбец */
+  div[style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* AddProductPage - форма в один столбец */
+  div[style*="grid-template-columns: 1fr 1fr"][style*="gap: 20px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* OrdersPage - упрощаем */
+  div[style*="maxWidth: 1000px"] {
+    padding: 10px !important;
+  }
+
+  /* OrderDetailPage */
+  div[style*="maxWidth: 800px"] {
+    padding: 10px !important;
+  }
+}
+
+/* Планшеты (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Карточки товаров в 2 столбца */
+  div[style*="grid-template-columns: repeat(auto-fill"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* SellerDashboard - статистика в 2 столбца */
+  div[style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Глобальные улучшения для мобильных */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+  /* Уменьшаем отступы */
+  div[style*="padding: 20px"] {
+    padding: 15px !important;
+  }
+
+  div[style*="padding: 30px"] {
+    padding: 20px !important;
+  }
+
+  /* Кнопки на всю ширину */
+  button[style*="width: 100%"] {
+    font-size: 14px !important;
+  }
+}
