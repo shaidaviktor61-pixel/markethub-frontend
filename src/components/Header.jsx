@@ -5,6 +5,9 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useSearch } from '../context/SearchContext';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function Header() {
   const { user, isAuthenticated, logout } = useAuth();
   const { totalItems } = useCart();
@@ -19,7 +22,8 @@ function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/categories');
+        // ✅ Исправлено: используем API_URL
+        const response = await axios.get(`${API_URL}/api/categories`);
         setCategories(response.data.categories);
       } catch (error) {
         console.error('Ошибка загрузки категорий:', error);
