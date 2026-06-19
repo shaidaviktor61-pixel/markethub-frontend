@@ -1,6 +1,9 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 // Создаем контекст
 const AuthContext = createContext();
 
@@ -34,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   // Регистрация
   const register = async (email, password, role = 'BUYER') => {
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      const response = await axios.post(`${API_URL}/api/auth/register`, {
         email,
         password,
         role
@@ -54,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   // Вход
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password
       });
