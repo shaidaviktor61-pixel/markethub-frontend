@@ -5,7 +5,6 @@ function YooKassaCheckout({ orderId, amount, description }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // ✅ БЕРЁМ URL ИЗ ПЕРЕМЕННОЙ ОКРУЖЕНИЯ
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   const handlePayment = async () => {
@@ -13,14 +12,15 @@ function YooKassaCheckout({ orderId, amount, description }) {
     setError('');
 
     try {
-      // ✅ ИСПРАВЛЕНО: используем полный URL
+      // ✅ Преобразуем amount в число
+      const numericAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
+
       const response = await axios.post(`${API_URL}/api/payments/create-payment`, {
         orderId,
-        amount,
+        amount: numericAmount, // ✅ Передаём число
         description,
       });
 
-      // Перенаправляем на страницу оплаты ЮKassa
       window.location.href = response.data.confirmationUrl;
     } catch (err) {
       console.error('Ошибка оплаты:', err);

@@ -13,7 +13,7 @@ function CheckoutPage() {
   const [shippingAddress, setShippingAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [order, setOrder] = useState(null); // ✅ Добавьте состояние для заказа
+  const [order, setOrder] = useState(null);
 
   // Если корзина пуста - перенаправляем
   if (cartItems.length === 0) {
@@ -27,7 +27,6 @@ function CheckoutPage() {
     return null;
   }
 
-  // ✅ БЕРЕМ URL ИЗ ПЕРЕМЕННОЙ ОКРУЖЕНИЯ
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   const handleSubmit = async (e) => {
@@ -37,7 +36,7 @@ function CheckoutPage() {
 
     try {
       const response = await axios.post(
-        `${API_URL}/api/orders`, // ✅ ИСПРАВЛЕНО: используем API_URL
+        `${API_URL}/api/orders`,
         {
           items: cartItems,
           shipping_address: shippingAddress
@@ -49,12 +48,7 @@ function CheckoutPage() {
         }
       );
 
-      // Сохраняем заказ в состояние
-      setOrder(response.data.order); // ✅ Сохраняем заказ
-
-      // Очищаем корзину (только после успешной оплаты, но пока можно)
-      // clearCart(); // ⚠️ Лучше очищать после оплаты
-
+      setOrder(response.data.order);
     } catch (err) {
       setError(err.response?.data?.error || 'Ошибка создания заказа');
     } finally {
@@ -83,7 +77,6 @@ function CheckoutPage() {
         </div>
       )}
 
-      {/* ✅ Если заказ создан — показываем оплату */}
       {order ? (
         <div>
           <div style={{
@@ -99,13 +92,12 @@ function CheckoutPage() {
 
           <YooKassaCheckout
             orderId={order.id}
-            amount={order.total_amount}
+            amount={parseFloat(order.total_amount)} // ✅ ПРЕОБРАЗУЕМ В ЧИСЛО
             description={`Оплата заказа #${order.id}`}
           />
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-          {/* Форма доставки */}
           <div>
             <h2 style={{ fontSize: '20px', marginBottom: '15px' }}>Адрес доставки</h2>
             
@@ -151,7 +143,6 @@ function CheckoutPage() {
             </form>
           </div>
 
-          {/* Сводка заказа */}
           <div>
             <h2 style={{ fontSize: '20px', marginBottom: '15px' }}>Ваш заказ</h2>
             
