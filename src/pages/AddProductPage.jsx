@@ -15,7 +15,7 @@ function AddProductPage() {
     description: '',
     price: '',
     stock_quantity: '',
-    category_id: '',
+    category_id: '', // ✅ UUID
     image_url: ''
   });
 
@@ -30,7 +30,6 @@ function AddProductPage() {
 
   const fetchCategories = async () => {
     try {
-      // ✅ Исправлено: используем API_URL
       const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data.categories);
     } catch (error) {
@@ -51,14 +50,13 @@ function AddProductPage() {
     setLoading(true);
 
     try {
-      // ✅ Исправлено: используем API_URL
       await axios.post(
         `${API_URL}/api/products`,
         {
           ...formData,
           price: parseFloat(formData.price),
           stock_quantity: parseInt(formData.stock_quantity),
-          category_id: parseInt(formData.category_id)
+          category_id: formData.category_id // ✅ УБРАЛИ parseInt
         },
         {
           headers: {
