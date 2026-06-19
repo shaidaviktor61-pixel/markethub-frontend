@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function OrdersPage() {
   const { token, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -20,7 +23,8 @@ function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/orders', {
+      // ✅ Исправлено: используем API_URL
+      const response = await axios.get(`${API_URL}/api/orders`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
