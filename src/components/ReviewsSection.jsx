@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import StarRating from './StarRating';
 
+// ✅ Берем URL из переменной окружения
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function ReviewsSection({ productId }) {
   const { token, isAuthenticated, user } = useAuth();
   
@@ -39,8 +42,9 @@ function ReviewsSection({ productId }) {
 
   const fetchReviews = async () => {
     try {
+      // ✅ Исправлено: используем API_URL
       const response = await axios.get(
-        `http://localhost:3000/api/reviews/product/${productId}`
+        `${API_URL}/api/reviews/product/${productId}`
       );
       setReviews(response.data.reviews);
       setAverageRating(parseFloat(response.data.averageRating));
@@ -65,8 +69,9 @@ function ReviewsSection({ productId }) {
     setSubmitting(true);
 
     try {
+      // ✅ Исправлено: используем API_URL
       await axios.post(
-        'http://localhost:3000/api/reviews',
+        `${API_URL}/api/reviews`,
         {
           product_id: productId,
           rating,
